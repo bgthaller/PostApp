@@ -1,0 +1,110 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="Create Post" content="" />
+        <meta name="Brandon Thaller" content="" />
+        <title>PostApp</title>
+        <!-- Favicon-->
+       
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">   
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+          <!-- Favicon-->
+          <link rel="icon" type="image/x-icon" href="{%static '/assets/favicon.ico'%}" />
+        
+          <!-- Core theme CSS (includes Bootstrap)-->
+        
+        <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+
+      
+    </head>
+    <body class=" pb-5">
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Your Name Here </a>
+
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                      {%if request.user.is_authenticated%}
+                      <span class="nav-item m-auto text-white me-5">Logged In: {{request.user}}</span>
+                      <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                      {%else%}
+                      <span class="navbar-brand mb-0 h1"></span>
+                      <li class="nav-item"><a class="nav-link" href="{% url 'members:login' %}">Login</a></li>
+                      {%endif%}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="operationsDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Stuff</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="operationsDropdown">
+                                <li><a class="dropdown-item" href="#">More Stuff</a></li>
+                           
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Post:posthome' %}">Post</a></li>
+                       
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                               
+                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">admin</a></li>
+                                <li><a class="dropdown-item" href="{% url 'Post:admin_postlist' %}">Post Admin</a></li>
+                               
+                          
+                              
+                               
+                            </ul>
+                        </li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Page content-->
+<div class="container-fluid  px-5" style="background-color:daf0ee ;" >
+
+
+{%if messages%}
+  {% for message in messages %}
+
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>  {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+  {% endfor %}
+{%endif%}
+
+{% block content %}{% endblock %}
+
+</div>
+
+
+    </body>
+    <br>
+    <!-- Footer-->
+<footer  class="fixed-bottom bg-dark py-4 mt-auto"  >
+  <div class="container px-5">
+      <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+          <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; mysite 2022</div></div>
+
+      </div>
+  </div>
+</footer>
+
+                <!-- Bootstrap core JS-->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+          
+            
+            <!-- Core theme JS-->
+         
+           
+</html>

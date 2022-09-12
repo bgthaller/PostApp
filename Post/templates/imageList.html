@@ -1,0 +1,248 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<style>
+	.hidden{
+        display:none;
+    }
+
+    .result{
+    	max-width:auto;
+    }
+</style>
+
+
+<div class="jumbotron">
+  <div class="p-2 text-center bg-light" style="margin-top: 10px;">
+    <h1 class="mb-3">Images</h1>
+  </div>
+
+  <div class="col-md-2 mb-5">
+    <a href="{% url 'Post:admin_postlist' %}" class="btn btn-secondary w-100 btn-md">
+        <i class="fas fa-stream"></i>Back to Post List
+    </a>
+  </div>
+
+  <div class="row p-1">
+      
+          {%if request.user.is_authenticated%}
+          <div class="col-md-12 ">
+              <button class="btn btn-outline-success w-100 btn-lg" i class="fas fa-plus" id="add-image"></i> Add New Image </button>
+              
+                <div class="form-add-blog hidden mt-2" style="width: 100%;"  >
+                  <form enctype="multipart/form-data" action="" method="post"> <!-- Do not forget to add: enctype="multipart/form-data" -->
+                    {% csrf_token %}
+                  
+                    <div class="col-2 p-3 mb-auto">
+                      {{form.order|as_crispy_field}}
+                    </div>
+                   
+                    <div class="col-lg-3 col-sm-12 p-3 mb-auto">
+                        {{form.default|as_crispy_field}}
+                    </div>
+               
+                
+             
+                    <div class="col-lg-6 col-sm-12 p-3 mb-auto">
+                        {{form.description|as_crispy_field}}
+                    </div>
+              
+
+                    <div class="col-lg-3 col-sm-12 p-3 mb-auto">
+                        {{form.image|as_crispy_field}}
+                    </div>
+                    
+
+                <input type="submit" value="Save"  >
+              </form>
+            </div>
+                </div>
+
+                </div>                    
+          </div>
+
+          {%else%}
+          <button type="submit" class="btn btn-outline-success w-100 btn-lg" data-bs-toggle="modal" data-bs-target="#edit{{item.id}}">
+            <i class="fas fa-plus"></i> Add New image
+          </button>
+          <div class="modal fade" id="edit{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">User Login Required</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                 You must login to edit items!
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <a href="{% url 'members:login' %}"class="btn btn-primary active" role="button" aria-pressed="true">Login</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {%endif%}
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+ 
+  var newId = 4
+  var newblog = { 'name': null, 'id': newId, 'Articels': null }
+
+  $('#add-image').on('click', function () {
+      $('.form-add-blog').removeClass('hidden')
+  })
+
+  $('#new-blog-result').on('change', function () {
+      newblog.name = $(this).val()
+      console.log(newblog)
+  })
+
+  $('#create-blog').on('click', function () {
+      if (newblog.name == null) {
+          alert('No name!')
+      } else {
+          name = newblog.name
+          var data = {'name':testid, 'maint':maint, 'comment': comment}
+       createBlogPost(data)
+
+      }
+  })
+ 
+  </script>
+
+
+
+{%if request.user.is_authenticated%}
+
+{%else%}
+<div class="alert alert-info" role="alert">
+  You must log in to Edit!
+</div>
+{%endif%}
+
+<br>
+
+    <!-- Start of Jumbotron -->
+        <div class="jumbotron jumbotron-fluid" >
+
+                <hr class="my-4">
+                <table class="table table-borderless table-striped table-hover table-fixed">
+                      <thead class="border-bottom font-weight-bold text-white w-100 ">
+                        <tr style="background-color:#214e7f">
+                          <th>Order Number</th>
+                          <th>Default</th>
+                          <th>Description</th>                        
+                          <th>image</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {%for item in images %}
+                        <tr>
+
+                            <td>{{item.order}}</td>
+                            <td>{{item.default}}</td>
+                            <td>{{item.description}}</td>                            
+                            <td> <img class="rounded mx-auto d-block" src="{{ item.image.url }}" style ="width: 200px; height:100px;" alt="..." /></td>
+                            <td>
+                              {%if request.user.is_authenticated%}
+                              <a href="{% url 'Post:image_update' item.id %}" class="btn text-secondary">
+                                  <i class="far fa-edit fa-lg fa-fw"></i>
+                              </a>
+                              {%else%}
+                              <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#edit{{item.id}}">
+                                <i class="far fa-edit fa-lg fa-fw"></i>
+                              </button>
+                              <div class="modal fade" id="edit{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">User Login Required</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                     You must login to edit items!
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <a href="{% url 'members:login' %}"class="btn btn-primary active" role="button" aria-pressed="true">Login</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              {%endif%}
+                              
+
+                              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#test{{item.id}}">
+                                <i class="far fa-trash-alt fa-lg text-danger fa-fw"></i>
+                              </button>
+                              <!-- Modal -->
+
+                              {%if request.user.is_authenticated%}
+                              <div class="modal fade" id="test{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Are you sure you want to delete image {{item.name}}?
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                      <form action="{% url 'Post:image_delete' item.id %}" method="post" class="d-inline" >
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {%else%}
+                              <div class="modal fade" id="test{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">User Login Required</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                     You must login to delete items!
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <a href="{% url 'members:login' %}"class="btn btn-primary active" role="button" aria-pressed="true">Login</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              {%endif%}
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+
+                </table>
+
+
+        </div>
+
+      <!-- End of Jumbotron -->
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+{%if request.user.is_authenticated%}
+
+    <!-- Start of Jumbotron -->
+        <div class="jumbotron px-5">
+          <div class="p-5 text-center bg-lite" style="margin-top: 10px;">
+            <h1 class="mb-3">Edit Entry</h1>
+          </div>
+          {{ form.media }}
+          
+         
+                <hr class="my-4">
+                <form action="" method="post" autocomplete = "off">
+                  {%csrf_token%}
+                <div class="row"> 
+                  <div class="col-sm-12 col-lg-6">
+                    <div class="row">
+                          {{form.title|as_crispy_field}}
+                    </div>  
+                    <div class="row-1">
+                          {{form.author|as_crispy_field}}
+                    </div>
+                    <div class="row-1">
+                        {{form.category|as_crispy_field}}
+                    </div>  
+                    <div class="row-1">
+                        {{form.HomePage|as_crispy_field}}
+                    </div>
+                    <div class="row-1">
+                        {{form.FeaturedPost|as_crispy_field}}
+                    </div>
+                    
+                    <div class="row-1" hidden>
+                        {{form.album|as_crispy_field}}
+                    </div> 
+                                                                    
+                  </div>
+
+                  <div class = "col-md-4">                 
+                    {{form.tags|as_crispy_field}}                  
+                  </div>
+                </div> 
+               
+                
+
+                <div class="row mb-5">
+                  <div class="col-12">
+                    {{form.text|as_crispy_field}}
+                  </div>  
+                </div>
+              
+             
+  
+            <div class="row">
+                <div class="col-md-8">
+                  <button type="submit" class="btn btn-success w-100 btn-lg"><i class="fas fa-save"></i>Submit</button>
+                </div>
+                <div class="col-md-4">
+                  <a href="{% url 'Post:admin_postlist' %}" class="btn btn-secondary w-100 btn-lg">
+                      <i class="fas fa-stream"></i>Back to list
+                  </a>
+                </div>
+              </div>
+
+        </div>
+
+      <!-- End of Jumbotron -->
+{%else%}
+<div class="alert alert-info" role="alert">
+  You must log in to Edit!
+</div>
+{%endif%}
+
+
+
+{% endblock %}

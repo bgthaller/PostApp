@@ -1,0 +1,74 @@
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+    width: max-content;
+}
+
+  .blog-imageview {
+  
+    max-height: 501px;
+    
+    min-width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 15rem;  
+    
+
+  }
+  
+
+
+
+
+
+  .blog-image1 {
+    height: auto;
+    width: 100%;
+    min-height: 15rem;
+    max-height: 25rem;
+
+  }
+  
+  .bg-featured-blog {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 15rem;
+}
+@media (max-width: 767px) {
+       .carousel-inner .carousel-item > div {
+           display: none;
+       }
+       .carousel-inner .carousel-item > div:first-child {
+           display: block;
+       }
+   }
+
+   .carousel-inner .carousel-item.active,
+   .carousel-inner .carousel-item-next,
+   .carousel-inner .carousel-item-prev {
+       display: flex;
+   }
+
+   /* medium and up screens */
+   @media (min-width: 768px) {
+
+       .carousel-inner .carousel-item-end.active,
+       .carousel-inner .carousel-item-next {
+         transform: translateX(25%);
+       }
+
+       .carousel-inner .carousel-item-start.active,
+       .carousel-inner .carousel-item-prev {
+         transform: translateX(-25%);
+       }
+   }
+
+   .carousel-inner .carousel-item-end,
+   .carousel-inner .carousel-item-start {
+     transform: translateX(0);
+   }

@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+{%if request.user.is_authenticated%}
+
+    <!-- Start of Jumbotron -->
+        <div class="jumbotron">
+          <div class="p-5 text-center bg-lite" style="margin-top: 10px;">
+            <h1 class="mb-3">Edit Image</h1>
+          </div>
+
+          <div class class="container">
+                <hr class="my-4">
+                <form action=""  enctype="multipart/form-data"  method="post" autocomplete = "off">
+                  {%csrf_token%}
+               
+                    <div class="col-1">
+                      {{form.order|as_crispy_field}}
+                    </div>
+                   
+                    <div class="col-1">
+                        {{form.default|as_crispy_field}}
+                    </div>
+                </div>
+                
+                <div class="row pb-5 ">
+                    <div class="col-lg-8 col-md-12">
+                        {{form.description|as_crispy_field}}
+                    </div>
+                                
+                </div>
+
+                    <div class="row">
+                        {{form.image|as_crispy_field}}
+                    </div>
+                    
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                  <button type="submit" class="btn btn-success w-100 btn-lg"><i class="fas fa-save"></i>Submit</button>
+                </div>
+                <div class="col-md-4">
+                  <a href="{% url 'Post:imageList' curalbum %}" class="btn btn-secondary w-100 btn-lg">
+                      <i class="fas fa-stream"></i>Back to list
+                  </a>
+                </div>
+              </div>
+
+        </div>
+
+      <!-- End of Jumbotron -->
+{%else%}
+<div class="alert alert-info" role="alert">
+  You must log in to Edit!
+</div>
+{%endif%}
+
+
+
+{% endblock %}

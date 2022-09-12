@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<div class="container ">
+
+<br>
+<h1>Login</h1>
+
+<div class="container-fluid">
+    <!-- Start of Jumbotron -->
+    <div class="col-md-10 offset-md-1 mt-5">
+
+        <div class="jumbotron jumbotron-fluid" >
+            <div class="container ">
+
+                <form action="" method="post" autocomplete = "off">
+                  {%csrf_token%}
+                  <div class="row row justify-content-center pb-5">
+                    <div class="col-4">
+                        {{form.username|as_crispy_field}}
+                    </div>
+                  </div>
+                  <div class="row row justify-content-center pb-5 ">
+                    <div class="col-4">
+                        {{form.password|as_crispy_field}}
+                    </div>
+                  </div>
+
+                  <div class="row justify-content-center">
+                    <div class="col-md-4">
+                      <button type="submit" class="btn btn-success w-100 btn-lg"><i class="fas fa-save"></i>Submit</button>
+                    </div>
+
+                  </div>
+
+            </div>
+        </div>
+    </div>
+      <!-- End of Jumbotron -->
+
+</div>
+
+
+{% endblock %}
+
+
